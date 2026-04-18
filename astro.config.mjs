@@ -22,5 +22,8 @@ export default defineConfig({
 
   integrations: [icon(), expressiveCode({
     themes: ["catppuccin-macchiato"]
-  }), react()]
+  }), react()],
+  image: {
+    domains: ["pub-144d74b17528424c9155230d18db7545.r2.dev"]
+  }
 });
