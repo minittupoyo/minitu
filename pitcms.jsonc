@@ -1,0 +1,56 @@
+{
+    "$schema": "https://pitcms.net/schema/pitcms.schema.json",
+    "schemaVersion": 1,
+    "media": {
+        "storagePath": "public/uploads",
+        "publicPath": "/uploads"
+    },
+    "collections": [
+        {
+            "name": "blog",
+            "label": "ブログ",
+            "description": "ブログの投稿を管理します",
+            "path": "content/blog",
+            "extension": "md",
+            "fields": [
+                { "name": "title", "type": "text", "label": "タイトル", "required": true },
+                { "name": "description", "type": "textarea", "label": "説明", "required": true },
+                { "name": "date", "type": "date", "label": "日付", "required": true, "includeTime": true },
+                { "name": "emoji", "type": "text", "label": "絵文字", "default": "⛅️" },
+                {
+                    "name": "tags",
+                    "type": "loop",
+                    "label": "タグ",
+                    "itemLabel": "tag",
+                    "fields": [
+                        { "name": "tag", "type": "text", "label": "タグ名" }
+                    ]
+                },
+                { "name": "draft", "type": "boolean", "label": "下書き", "default": false },
+                { "name": "content", "type": "richtext", "label": "本文" }
+            ],
+            "pit": {
+                "title": "title",
+                "body": "content",
+                "createdAt": "date",
+                "draft": "draft"
+            }
+        },
+        {
+            "name": "pages",
+            "label": "固定ページ",
+            "description": "Aboutページなどの固定ページを管理します",
+            "path": "content/pages",
+            "extension": "md",
+            "fields": [
+                { "name": "title", "type": "text", "label": "タイトル", "required": true },
+                { "name": "description", "type": "textarea", "label": "説明", "required": true },
+                { "name": "content", "type": "richtext", "label": "本文" }
+            ],
+            "pit": {
+                "title": "title",
+                "body": "content"
+            }
+        }
+    ]
+}

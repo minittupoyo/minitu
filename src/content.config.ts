@@ -9,7 +9,7 @@ const blogCollection = defineCollection({
         description: z.string(),
         date: z.date(),
         emoji: z.string().default("⛅️"),
-        tags: z.array(z.string()).optional(),
+        tags: z.array(z.object({ tag: z.string() })).optional(),
         draft: z.boolean().default(false)
     })
 })

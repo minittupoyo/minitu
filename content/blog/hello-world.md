@@ -3,7 +3,8 @@ title: ハローワールド
 description: こんにちは、世界。
 emoji: 👋
 date: 2026-04-18
-tags: ["雑記"]
+tags:
+  - tag: "雑記"
 draft: false
 ---
 
