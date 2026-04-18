@@ -27,6 +27,7 @@
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "remark-breaks": "^4.0.0",
+    "remark-link-card-plus": "^0.7.4",
     "tailwindcss": "^4.2.2",
     "takumi-js": "^1.0.14",
     "wrangler": "^4.83.0"

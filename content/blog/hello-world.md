@@ -4,7 +4,7 @@ description: こんにちは、世界。
 emoji: 👋
 date: 2026-04-18
 tags:
-  - tag: "雑記"
+    - tag: "雑記"
 draft: false
 ---
 
@@ -24,7 +24,7 @@ Astroはちょうどいい。シンプルだし、軽いし。
 
 ## 参考にしたもの
 
-[Pure](https://astro.build/themes/details/pure/)
+https://astro.build/themes/details/pure/
 
 このテーマの見た目を一部参考にしています。ありがとうございます！
 

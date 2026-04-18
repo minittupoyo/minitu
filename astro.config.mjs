@@ -8,7 +8,7 @@ import icon from 'astro-icon';
 
 import expressiveCode from 'astro-expressive-code';
 import remarkBreaks from 'remark-breaks';
-
+import remarkLinkCard from 'remark-link-card-plus';
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,7 +17,12 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
   markdown: {
-    remarkPlugins: [remarkBreaks]
+    remarkPlugins: [remarkBreaks, [remarkLinkCard, {
+      shortenUrl: true,
+      thumbnailPosition: "right",
+      noThumbnail: false,
+      noFavicon: false,
+    }]]
   },
 
   integrations: [icon(), expressiveCode({

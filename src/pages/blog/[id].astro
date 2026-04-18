@@ -40,7 +40,9 @@ const { Content, headings } = await render(post);
         <div class="flex flex-col items-center space-y-4 text-center">
             <p class="text-7xl">{post.data.emoji}</p>
             <div class="flex flex-col items-center space-y-2">
-                <h1 class="text-3xl font-bold md:text-4xl">{post.data.title}</h1>
+                <h1 class="text-3xl font-bold md:text-4xl">
+                    {post.data.title}
+                </h1>
                 <p class="max-w-2xl text-lg font-medium text-slate-700">
                     {post.data.description}
                 </p>
@@ -63,7 +65,6 @@ const { Content, headings } = await render(post);
         <div class="grid w-full grid-cols-1 gap-12 md:grid-cols-12">
             <div class="prose prose-slate w-full min-w-full md:col-span-8">
                 <Content />
-                <PostNavigation prevPost={prevPost} nextPost={nextPost} />
             </div>
             <aside class="hidden md:col-span-4 md:block">
                 <div class="sticky top-24">
@@ -71,5 +72,6 @@ const { Content, headings } = await render(post);
                 </div>
             </aside>
         </div>
+        <PostNavigation prevPost={prevPost} nextPost={nextPost} />
     </section>
 </Layout>
