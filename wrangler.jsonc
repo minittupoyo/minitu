@@ -1,0 +1,14 @@
+{
+    "$schema": "./node_modules/wrangler/config-schema.json",
+    "name": "minittu",
+    "compatibility_date": "2026-04-18",
+    "assets": {
+        "directory": "./dist"
+    },
+    "routes": [
+        {
+            "custom_domain": true,
+            "pattern": "blog.minittu.net"
+        }
+    ]
+}

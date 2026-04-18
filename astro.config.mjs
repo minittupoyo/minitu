@@ -12,7 +12,7 @@ import remarkBreaks from 'remark-breaks';
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://minittu.pages.dev",
+  site: "https://blog.minittu.net",
   vite: {
     plugins: [tailwindcss()]
   },
