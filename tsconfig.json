@@ -13,6 +13,8 @@
         "./src/*"
       ]
     },
-    "noUncheckedSideEffectImports": false
+    "noUncheckedSideEffectImports": false,
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   }
 }

@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+    prevPost: CollectionEntry<"blog"> | null;
+    nextPost: CollectionEntry<"blog"> | null;
+}
+
+const { prevPost, nextPost } = Astro.props;
+---
+
+<div class="mt-12 grid grid-cols-1 gap-4 border-t border-slate-100 py-12 md:grid-cols-2">
+    {/* Previous Post */}
+    <div class="flex flex-col gap-2">
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Previous</span>
+        {prevPost ? (
+            <a
+                href={`/blog/${prevPost.id}`}
+                class="group flex flex-row items-center gap-4 rounded-2xl border border-slate-100 p-4 transition-all duration-300 hover:border-slate-200 hover:bg-slate-50/50"
+            >
+                <Icon
+                    name="tabler:chevron-left"
+                    class="translate-x-1 text-lg text-slate-400 transition-all duration-300 group-hover:translate-x-0 group-hover:text-slate-900"
+                />
+                <div class="flex flex-1 flex-col overflow-hidden">
+                    <h4 class="truncate text-base font-bold text-slate-900">{prevPost.data.title}</h4>
+                    <p class="truncate text-xs text-slate-500">{prevPost.data.description}</p>
+                </div>
+            </a>
+        ) : (
+            <div class="flex flex-row items-center gap-4 rounded-2xl border border-dashed border-slate-200 bg-slate-50/30 p-4 opacity-60">
+                <Icon name="tabler:minus" class="text-lg text-slate-300" />
+                <span class="text-sm font-medium text-slate-400 italic">これが最古の記事です</span>
+            </div>
+        )}
+    </div>
+
+    {/* Next Post */}
+    <div class="flex flex-col gap-2 text-right">
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider mr-1">Next</span>
+        {nextPost ? (
+            <a
+                href={`/blog/${nextPost.id}`}
+                class="group flex flex-row-reverse items-center gap-4 rounded-2xl border border-slate-100 p-4 transition-all duration-300 hover:border-slate-200 hover:bg-slate-50/50"
+            >
+                <Icon
+                    name="tabler:chevron-right"
+                    class="-translate-x-1 text-lg text-slate-400 transition-all duration-300 group-hover:translate-x-0 group-hover:text-slate-900"
+                />
+                <div class="flex flex-1 flex-col overflow-hidden">
+                    <h4 class="truncate text-base font-bold text-slate-900">{nextPost.data.title}</h4>
+                    <p class="truncate text-xs text-slate-500">{nextPost.data.description}</p>
+                </div>
+            </a>
+        ) : (
+            <div class="flex flex-row-reverse items-center gap-4 rounded-2xl border border-dashed border-slate-200 bg-slate-50/30 p-4 opacity-60">
+                <Icon name="tabler:minus" class="text-lg text-slate-300" />
+                <span class="text-sm font-medium text-slate-400 italic">これが最新の記事です</span>
+            </div>
+        )}
+    </div>
+</div>

@@ -2,23 +2,40 @@
 import Layout from "@/layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
 import { getCollection, render } from "astro:content";
+import PostNavigation from "@/components/PostNavigation.astro";
 import TableOfContents from "@/components/TableOfContents.astro";
 
 export async function getStaticPaths() {
     const posts = await getCollection("blog", ({ data }) => {
         return import.meta.env.PROD ? data.draft !== true : true;
     });
-    return posts.map((post) => ({
-        params: { id: post.id },
-        props: { post },
-    }));
+
+    // 日付順（降順：新しい順）にソート
+    const sortedPosts = posts.sort(
+        (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+    );
+
+    return sortedPosts.map((post, index) => {
+        const nextPost = index > 0 ? sortedPosts[index - 1] : null; // より新しい記事
+        const prevPost =
+            index < sortedPosts.length - 1 ? sortedPosts[index + 1] : null; // より古い記事
+
+        return {
+            params: { id: post.id },
+            props: { post, prevPost, nextPost },
+        };
+    });
 }
 
-const { post } = Astro.props;
+const { post, prevPost, nextPost } = Astro.props;
 const { Content, headings } = await render(post);
 ---
 
-<Layout>
+<Layout
+    title={post.data.title}
+    description={post.data.description}
+    articleDate={post.data.date}
+>
     <section class="flex flex-col py-16">
         <div class="flex flex-col items-center space-y-4 text-center">
             <p class="text-7xl">{post.data.emoji}</p>
@@ -46,6 +63,7 @@ const { Content, headings } = await render(post);
         <div class="grid w-full grid-cols-1 gap-12 md:grid-cols-12">
             <div class="prose prose-slate w-full min-w-full md:col-span-8">
                 <Content />
+                <PostNavigation prevPost={prevPost} nextPost={nextPost} />
             </div>
             <aside class="hidden md:col-span-4 md:block">
                 <div class="sticky top-24">

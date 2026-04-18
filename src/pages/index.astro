@@ -5,6 +5,9 @@ import profileIcon from "@/assets/icon.webp";
 import Layout from "@/layouts/Layout.astro";
 import BlogCard from "@/components/BlogCard.astro";
 import { getCollection } from "astro:content";
+import { siteConfig } from "@/site.config";
+
+const { author } = siteConfig;
 
 const allPosts = await getCollection("blog", ({ data }) => {
     return import.meta.env.PROD ? data.draft !== true : true;
@@ -23,23 +26,28 @@ const recentPosts = allPosts
                 alt="プロフィールアイコン"
                 class="h-40 w-40 rounded-full object-cover"
             />
-            <h1 class="text-4xl font-bold">みにっつ</h1>
+            <h1 class="text-4xl font-bold">{author.name}</h1>
             <div class="flex flex-row items-center gap-4">
                 <p
                     class="flex flex-row items-center gap-1 text-lg text-slate-700"
                 >
                     <Icon name="tabler:map-pin" />
-                    <span>Iwate</span>
+                    <span>{author.location}</span>
                 </p>
                 <p
                     class="flex flex-row items-center gap-1 text-lg text-slate-700"
                 >
                     <Icon name="tabler:briefcase-2" />
-                    <span>無職</span>
+                    <span>{author.job}</span>
                 </p>
             </div>
             <p class="text-center text-lg text-slate-700">
-                18歳、無職ニート。<br />プログラミング擬きを趣味としている。
+                {author.bio.map((line, i) => (
+                    <>
+                        {line}
+                        {i !== author.bio.length - 1 && <br />}
+                    </>
+                ))}
             </p>
         </div>
     </section>
@@ -57,7 +65,7 @@ const recentPosts = allPosts
                 />
             </a>
         </div>
-        <div class="mt-8 grid grid-cols-1 gap-4">
+        <div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
             {recentPosts.map((post) => <BlogCard post={post} />)}
         </div>
     </section>

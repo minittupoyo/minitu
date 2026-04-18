@@ -2,14 +2,17 @@
 import { defineConfig } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
+import react from '@astrojs/react';
 
 import icon from 'astro-icon';
 
 import expressiveCode from 'astro-expressive-code';
 import remarkBreaks from 'remark-breaks';
 
+
 // https://astro.build/config
 export default defineConfig({
+  site: "https://minittu.pages.dev",
   vite: {
     plugins: [tailwindcss()]
   },
@@ -19,5 +22,5 @@ export default defineConfig({
 
   integrations: [icon(), expressiveCode({
     themes: ["catppuccin-macchiato"]
-  })]
+  }), react()]
 });
