@@ -7,7 +7,7 @@ const blogCollection = defineCollection({
     schema: z.object({
         title: z.string(),
         description: z.string(),
-        date: z.date().transform((date) => date.toISOString()),
+        date: z.coerce.date().transform((date) => date.toISOString()),
         emoji: z.string().default("⛅️"),
         tags: z.array(z.object({ tag: z.string() })).optional(),
         draft: z.boolean().default(false)
