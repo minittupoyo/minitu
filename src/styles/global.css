@@ -1,0 +1,36 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+}
+
+@theme {
+    --default-font-family:
+        "Inter Variable", "Noto Sans JP Variable", sans-serif;
+    --default-mono-font-family: "Geist Mono Variable", monospace;
+}
+
+@layer base {
+    body {
+        @apply bg-white text-slate-900 antialiased;
+    }
+
+    /* Inline code custom styles */
+    .prose
+        :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+        @apply rounded-md bg-slate-100 px-1.5 py-0.5 font-semibold text-slate-800;
+    }
+
+    .prose
+        :where(code):not(
+            :where([class~="not-prose"], [class~="not-prose"] *)
+        )::before,
+    .prose
+        :where(code):not(
+            :where([class~="not-prose"], [class~="not-prose"] *)
+        )::after {
+        content: none !important;
+    }
+}

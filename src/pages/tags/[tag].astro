@@ -1,0 +1,55 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+import BlogCard from "@/components/BlogCard.astro";
+
+export async function getStaticPaths() {
+    const allPosts = await getCollection("blog", ({ data }) => {
+        return import.meta.env.PROD ? data.draft !== true : true;
+    });
+
+    const uniqueTags = [
+        ...new Set(
+            allPosts
+                .map((post) => post.data.tags)
+                .flat()
+                .filter((tag): tag is string => !!tag),
+        ),
+    ];
+
+    return uniqueTags.map((tag) => {
+        const filteredPosts = allPosts.filter((post) =>
+            post.data.tags?.includes(tag),
+        );
+        return {
+            params: { tag },
+            props: { posts: filteredPosts },
+        };
+    });
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<Layout>
+    <section class="flex flex-col py-16">
+        <div class="flex flex-col items-center space-y-4">
+            <div class="flex flex-row items-center gap-2 text-slate-500">
+                <Icon name="tabler:tag" />
+                <span class="font-medium text-slate-700">Tag</span>
+            </div>
+            <h1 class="text-4xl font-bold">{tag}</h1>
+            <p class="text-lg text-slate-700">
+                {posts.length}件の記事が見つかりました。
+            </p>
+        </div>
+    </section>
+
+    <section class="flex flex-col border-t border-slate-100 py-8">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {posts.map((post) => <BlogCard post={post} />)}
+        </div>
+    </section>
+</Layout>

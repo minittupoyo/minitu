@@ -1,0 +1,44 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+import { getCollection, render } from "astro:content";
+import TableOfContents from "@/components/TableOfContents.astro";
+
+export async function getStaticPaths() {
+    const posts = await getCollection("pages");
+    return posts.map((post) => ({
+        params: { id: post.id },
+        props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+---
+
+<Layout>
+    <section class="flex flex-col py-16">
+        <div class="flex flex-col items-center space-y-4 text-center">
+            <div class="flex flex-col items-center space-y-2">
+                <h1 class="text-3xl font-bold md:text-4xl">
+                    {post.data.title}
+                </h1>
+                <p class="max-w-2xl text-lg font-medium text-slate-700">
+                    {post.data.description}
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="flex flex-col border-t border-slate-100 py-12">
+        <div class="grid w-full grid-cols-1 gap-12 md:grid-cols-12">
+            <div class="prose prose-slate w-full min-w-full md:col-span-8">
+                <Content />
+            </div>
+            <aside class="hidden md:col-span-4 md:block">
+                <div class="sticky top-24">
+                    <TableOfContents headings={headings} />
+                </div>
+            </aside>
+        </div>
+    </section>
+</Layout>

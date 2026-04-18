@@ -1,0 +1,64 @@
+---
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import profileIcon from "@/assets/icon.webp";
+import Layout from "@/layouts/Layout.astro";
+import BlogCard from "@/components/BlogCard.astro";
+import { getCollection } from "astro:content";
+
+const allPosts = await getCollection("blog", ({ data }) => {
+    return import.meta.env.PROD ? data.draft !== true : true;
+});
+
+const recentPosts = allPosts
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+    .slice(0, 10);
+---
+
+<Layout>
+    <section class="flex flex-col py-16">
+        <div class="flex flex-col items-center justify-center space-y-4">
+            <Image
+                src={profileIcon}
+                alt="プロフィールアイコン"
+                class="h-40 w-40 rounded-full object-cover"
+            />
+            <h1 class="text-4xl font-bold">みにっつ</h1>
+            <div class="flex flex-row items-center gap-4">
+                <p
+                    class="flex flex-row items-center gap-1 text-lg text-slate-700"
+                >
+                    <Icon name="tabler:map-pin" />
+                    <span>Iwate</span>
+                </p>
+                <p
+                    class="flex flex-row items-center gap-1 text-lg text-slate-700"
+                >
+                    <Icon name="tabler:briefcase-2" />
+                    <span>無職</span>
+                </p>
+            </div>
+            <p class="text-center text-lg text-slate-700">
+                18歳、無職ニート。<br />プログラミング擬きを趣味としている。
+            </p>
+        </div>
+    </section>
+    <section class="flex flex-col border-t border-slate-100 py-12">
+        <div class="flex flex-row items-center justify-between">
+            <h2 class="text-2xl font-bold">最近の記事</h2>
+            <a
+                href="/blog"
+                class="group flex flex-row items-center text-slate-700 **:transition-all **:duration-300"
+            >
+                <span>すべての記事</span>
+                <Icon
+                    name="tabler:chevron-right"
+                    class="group-hover:translate-x-1"
+                />
+            </a>
+        </div>
+        <div class="mt-8 grid grid-cols-1 gap-4">
+            {recentPosts.map((post) => <BlogCard post={post} />)}
+        </div>
+    </section>
+</Layout>

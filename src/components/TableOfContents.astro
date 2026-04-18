@@ -1,0 +1,56 @@
+---
+import type { MarkdownHeading } from "astro";
+
+interface Props {
+    headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+
+// h2 と h3 のみを表示対象とする
+const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+
+if (tocHeadings.length === 0) {
+    return null;
+}
+---
+
+<nav class="flex flex-col gap-4">
+    <div class="flex items-center gap-2 text-xs font-bold tracking-widest text-slate-400 uppercase">
+        目次
+    </div>
+    <ul class="flex flex-col gap-1 border-l border-slate-100">
+        {
+            tocHeadings.map((heading) => (
+                <li
+                    class:list={[
+                        "flex flex-col",
+                        heading.depth === 2 ? "" : "pl-4",
+                    ]}
+                >
+                    <a
+                        href={`#${heading.slug}`}
+                        class:list={[
+                            "block border-l-2 py-1.5 pl-4 -ml-[2px] text-sm transition-all duration-200",
+                            "border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-900",
+                        ]}
+                    >
+                        {heading.text}
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+</nav>
+
+<style>
+    /* スムーズスクロールがLayout.astroで設定されていない場合のためのフォールバック */
+    :global(html) {
+        scroll-behavior: smooth;
+    }
+    
+    /* ヘッダーの固定分オフセットを考慮したジャンプ位置の調整 */
+    :global(h2), :global(h3) {
+        scroll-margin-top: 5rem;
+    }
+</style>
