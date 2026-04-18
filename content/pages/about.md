@@ -29,14 +29,14 @@ description: このサイトについて
 
 ### Astro
 
-[Astro](https://astro.build)
+https://astro.build
 
 静的サイトジェネレーターです。多分これが一番速いと思います。
 コードも比較的書きやすいし、いい感じです。
 
 ### Tailwind CSS
 
-[Tailwind CSS](https://tailwindcss.com)
+https://tailwindcss.com
 
 CSSフレームワークです。クラスとか覚えれれば楽です。
 まだまだ覚えられてないですけどね。

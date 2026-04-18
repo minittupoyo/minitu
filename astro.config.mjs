@@ -18,6 +18,7 @@ export default defineConfig({
   },
   markdown: {
     remarkPlugins: [remarkBreaks, [remarkLinkCard, {
+      cache: true,
       shortenUrl: true,
       thumbnailPosition: "right",
       noThumbnail: false,
